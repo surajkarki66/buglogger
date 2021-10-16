@@ -20,7 +20,7 @@
     "package": "yarn run build",
     "postpackage-linux": "electron-packager ./ --out=./release-builds --overwrite --platform=linux --arch=x64 --icon=assets/icon.png",
     "postpackage-mac": "electron-packager ./ --out=./release-builds --overwrite --platform=darwin --arch=x64 --icon=assets/icon.icns",
-    "package-win": "electron-packager ./ --out=./release-builds --overwrite --platform=win32 --arch=ia32 --icon=assets/icon.ico --prune=false --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BugLogger\""
+    "postpackage-win": "electron-packager ./ --out=./release-builds --overwrite --platform=win32 --arch=ia32 --icon=assets/icon.ico --prune=false --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BugLogger\""
   },
   "dependencies": {
     "bootstrap": "^5.1.3",

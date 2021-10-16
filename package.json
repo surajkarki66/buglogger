@@ -1,6 +1,6 @@
 {
-  "name": "bugtracker",
-  "productName": "BugTracker",
+  "name": "buglogger",
+  "productName": "BugLogger",
   "version": "1.0.0",
   "description": "This is a simple cross-platform desktop application in which you can track bugs by creating, editing and deleting the bugs.",
   "license": "MIT",

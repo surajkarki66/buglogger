@@ -1,1 +1,1 @@
-# BugTracker
+# BugLogger

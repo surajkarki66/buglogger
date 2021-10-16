@@ -35,6 +35,7 @@ module.exports = {
       // both options are optional
       filename: "bundle.css",
       chunkFilename: "[id].css",
+      ignoreOrder: false,
     }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),

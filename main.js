@@ -1,6 +1,6 @@
 const path = require("path");
 const url = require("url");
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 
 const connectDB = require("./config/db");
 const Log = require("./models/Log");
@@ -11,6 +11,7 @@ connectDB();
 let mainWindow;
 
 let isDev = false;
+const isMac = process.platform === "darwin" ? true : false;
 
 if (
   process.env.NODE_ENV !== undefined &&
@@ -72,14 +73,77 @@ function createMainWindow() {
   mainWindow.on("closed", () => (mainWindow = null));
 }
 
-app.on("ready", createMainWindow);
+app.on("ready", () => {
+  createMainWindow();
 
+  const mainMenu = Menu.buildFromTemplate(menu);
+  Menu.setApplicationMenu(mainMenu);
+});
+
+const menu = [
+  ...(isMac ? [{ role: "appMenu" }] : []),
+  { role: "fileMenu" },
+  { role: "editMenu" },
+  {
+    label: "Logs",
+    submenu: [
+      {
+        label: "Clear Logs",
+        click: () => clearLogs(),
+      },
+    ],
+  },
+  ...(isDev
+    ? [
+        {
+          label: "Developer",
+          submenu: [
+            { role: "reload" },
+            { role: "forcereload" },
+            { type: "separator" },
+            { role: "toggledevtools" },
+          ],
+        },
+      ]
+    : []),
+];
+
+// Load logs
 ipcMain.on("logs:load", sendLogs);
+
+// Create log
+ipcMain.on("logs:add", async (e, item) => {
+  try {
+    await Log.create(item);
+    sendLogs();
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+// Delete log
+ipcMain.on("logs:delete", async (e, _id) => {
+  try {
+    await Log.findOneAndDelete({ _id: _id });
+    sendLogs();
+  } catch (e) {
+    console.error(e);
+  }
+});
 
 async function sendLogs() {
   try {
     const logs = await Log.find().sort({ created: 1 });
     mainWindow.webContents.send("logs:get", JSON.stringify(logs));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function clearLogs() {
+  try {
+    await Log.deleteMany({});
+    mainWindow.webContents.send("logs:clear");
   } catch (e) {
     console.error(e);
   }

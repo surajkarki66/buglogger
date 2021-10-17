@@ -28,41 +28,41 @@ This is a simple cross-platform desktop application in which you can track bugs 
 
 ### Step 2: Postpackage
 
-### Using yarn
+#### Using yarn
 
-### For Linux:
+##### For Linux:
 
 ```bash
   $ yarn run postpackage-linux
 ```
 
-## For MacOS:
+##### For MacOS:
 
 ```bash
   $ yarn run postpackage-mac
 ```
 
-## For Windows:
+##### For Windows:
 
 ```bash
  $ yarn run postpackage-win
 ```
 
-### Using npm
+#### Using npm
 
-### For Linux:
+##### For Linux:
 
 ```bash
   $ npm run postpackage-linux
 ```
 
-## For MacOS:
+##### For MacOS:
 
 ```bash
   $ npm run postpackage-mac
 ```
 
-## For Windows:
+##### For Windows:
 
 ```bash
  $ npm run postpackage-win
